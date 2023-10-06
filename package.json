@@ -1,0 +1,13 @@
+{
+  "name": "@quellen-sol/lazy-iterators",
+  "version": "0.0.1",
+  "author": "quellen-sol",
+  "description": "A collection of lazy iterator methods in TypeScript",
+  "keywords": ["lazy", "iterators", "iterator"],
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "pnpm build && node dist/index.js"
+  }
+}
