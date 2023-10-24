@@ -35,6 +35,9 @@ export class LazyIterator<T> {
     if (chunkSize <= 0) {
       throw new Error("LazyIterator - Cannot create chunks of size 0 or lower");
     }
+    if (chunkSize === Infinity) {
+      throw new Error("LazyIterator - Cannot create chunks of size Infinity");
+    }
     const { iterable } = this;
     const generator = function* () {
       let currChunk: T[] = [];
