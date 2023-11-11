@@ -1,4 +1,4 @@
-export class AyncLazyIterator<T> {
+export class AsyncLazyIterator<T> {
   constructor(public readonly iterable: AsyncIterable<T>) { }
 
   async collect(): Promise<T[]> {
@@ -9,7 +9,7 @@ export class AyncLazyIterator<T> {
     return res;
   }
 
-  map<U>(fn: (value: T) => U): AyncLazyIterator<U> {
+  map<U>(fn: (value: T) => U): AsyncLazyIterator<U> {
     const { iterable } = this;
     const generator = async function* () {
       for await (const item of iterable) {
@@ -17,12 +17,12 @@ export class AyncLazyIterator<T> {
       }
     }
 
-    return new AyncLazyIterator(generator());
+    return new AsyncLazyIterator(generator());
   }
 
-  filter<S extends T>(fn: (item: T) => item is S): AyncLazyIterator<S>
-  filter(fn: (item: T) => boolean): AyncLazyIterator<T>
-  filter(fn: (item: T) => boolean): AyncLazyIterator<T> {
+  filter<S extends T>(fn: (item: T) => item is S): AsyncLazyIterator<S>
+  filter(fn: (item: T) => boolean): AsyncLazyIterator<T>
+  filter(fn: (item: T) => boolean): AsyncLazyIterator<T> {
     const { iterable } = this;
     const generator = async function* () {
       for await (const item of iterable) {
@@ -32,15 +32,15 @@ export class AyncLazyIterator<T> {
       }
     }
 
-    return new AyncLazyIterator(generator());
+    return new AsyncLazyIterator(generator());
   }
 
-  chunks(chunkSize: number, truncateChunks = false): AyncLazyIterator<T[]> {
+  chunks(chunkSize: number, truncateChunks = false): AsyncLazyIterator<T[]> {
     if (chunkSize <= 0) {
-      throw new Error("LazyIterator - Cannot create chunks of size 0 or lower");
+      throw new Error("AsyncLazyIterator - Cannot create chunks of size 0 or lower");
     }
     if (chunkSize === Infinity) {
-      throw new Error("LazyIterator - Cannot create chunks of size Infinity");
+      throw new Error("AsyncLazyIterator - Cannot create chunks of size Infinity");
     }
     const { iterable } = this;
     const generator = async function* () {
@@ -59,13 +59,13 @@ export class AyncLazyIterator<T> {
       }
     }
 
-    return new AyncLazyIterator(generator());
+    return new AsyncLazyIterator(generator());
   }
 
-  rev(): AyncLazyIterator<T> {
+  rev(): AsyncLazyIterator<T> {
     // We can only reverse if the iterable is an array
     if (!Array.isArray(this.iterable)) {
-      throw new Error("LazyIterator - Cannot reverse non-array iterables");
+      throw new Error("AsyncLazyIterator - Cannot reverse non-array iterables");
     }
     const { iterable } = this;
     const generator = async function* () {
@@ -74,6 +74,6 @@ export class AyncLazyIterator<T> {
       }
     }
 
-    return new AyncLazyIterator(generator());
+    return new AsyncLazyIterator(generator());
   }
 }
